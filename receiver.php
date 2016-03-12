@@ -1,6 +1,6 @@
 <?php
+error_reporting(E_ALL);
 require '../../../zb_system/function/c_system_base.php';
-require '../../../zb_system/function/c_system_admin.php';
 $zbp->Load();
 if (!$zbp->CheckPlugin('hacpai')) {$zbp->ShowError(48);die();}
 
@@ -12,13 +12,14 @@ if (!isset($GLOBALS['HTTP_RAW_POST_DATA'])) {
 }
 $rawData = trim($rawData);
 $result = json_decode($rawData);
-if ($result->client->key !== $zbp->Config('hacpai')->b3logKey) {
+if ($result->client->key !== $zbp->Config('hacpai')->key) {
 	exit;
 }
 
 switch (GetVars('action', 'GET')) {
 case 'comment':
 	syncComment();
+	echo 'ok';
 	break;
 default:
 	exit;
@@ -28,7 +29,7 @@ function syncComment() {
 	global $zbp;
 	global $result;
 
-	$article = new Article();
+	$article = new Post();
 	$comment = new Comment();
 
 	$article->LoadInfoByID($result->comment->articleId);
@@ -49,7 +50,7 @@ function syncComment() {
 	$comment->IP = GetGuestIP();
 	$comment->Agent = GetGuestAgent();
 	$comment->Metas->HacpaiOriginalData = $result->comment->content;
-	filterComment($comment);
+	filterCommentForHacpai($comment);
 	$comment->Save();
 }
 
@@ -57,7 +58,7 @@ function syncComment() {
  * Filter Comment
  * @param &$comment
  */
-function filterComment(&$comment) {
+function filterCommentForHacpai(&$comment) {
 	global $zbp;
 	if (!CheckRegExp($comment->Name, '[username]')) {
 		$comment->Name = $zbp->lang['user_level_name'][5];

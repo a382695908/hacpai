@@ -37,17 +37,21 @@ function hacpai_post($url, $data) {
 
 function hacpai_postarticle_succeed(&$article) {
 	global $zbp;
+	$tagName = $article->TagsName;
+	if ($tagName == '') {
+		$zbp->SetHint('bad', '未设置标签，可能不能同步到hacpai!');
+	}
 	$postData = array(
 		"article" => array(
 			"id" => $article->ID,
 			"title" => $article->Title,
-			"permalink" => $article->Url,
-			"tags" => $article->TagsName,
+			"permalink" => '/' . str_replace($zbp->host, '', $article->Url),
+			"tags" => $tagName,
 			"content" => $article->Content,
 		),
 		"client" => array(
 			"title" => $zbp->title,
-			"host" => $zbp->host,
+			"host" => substr($zbp->host, 0, strlen($zbp->host) - 1),
 			"email" => $zbp->Config('hacpai')->email,
 			"key" => $zbp->Config('hacpai')->key,
 		));
@@ -59,14 +63,14 @@ function hacpai_postcomment_succeed(&$comment) {
 	$postData = array(
 		"comment" => array(
 			"id" => $comment->ID,
-			"articleId" => $comment->LogId,
+			"articleId" => $comment->LogID,
 			"content" => $comment->Content,
 			"authorName" => $comment->Name,
 			"authorEmail" => $comment->Email,
 		),
 		"client" => array(
 			"title" => $zbp->title,
-			"host" => $zbp->host,
+			"host" => substr($zbp->host, 0, strlen($zbp->host) - 1),
 			"email" => $zbp->Config('hacpai')->email,
 			"key" => $zbp->Config('hacpai')->key,
 		));
