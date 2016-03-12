@@ -44,7 +44,9 @@ require $blogpath . 'zb_system/admin/admin_top.php';
       <tr>
         <td><p><span class="bold"> · 接口地址</span></p></td>
         <td>
-        	<p>客户端收文接口：<a href="<?php echo $bloghost; ?>zb_users/plugin/hacpai/receiver.php?action=article" onclick="return false;"><?php echo $bloghost; ?>zb_users/plugin/hacpai/receiver.php?action=article</a></p>
+        	<p>（暂未支持）客户端收文接口：<a href="<?php echo $bloghost; ?>zb_users/plugin/hacpai/receiver.php?action=article" onclick="return false;"><?php echo $bloghost; ?>zb_users/plugin/hacpai/receiver.php?action=article</a></p>
+          <p>（暂未支持）客户端更新接口：<a href="<?php echo $bloghost; ?>zb_users/plugin/hacpai/receiver.php?action=comment" onclick="return false;"><?php echo $bloghost; ?>zb_users/plugin/hacpai/receiver.php?action=update</a></p>
+
         	<p>客户端收评接口：<a href="<?php echo $bloghost; ?>zb_users/plugin/hacpai/receiver.php?action=comment" onclick="return false;"><?php echo $bloghost; ?>zb_users/plugin/hacpai/receiver.php?action=comment</a></p>
         </td>
       </tr>
