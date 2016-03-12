@@ -1,5 +1,6 @@
 <?php
 error_reporting(E_ALL);
+define('IS_HACPAI_SYNCING', true);
 require '../../../zb_system/function/c_system_base.php';
 $zbp->Load();
 if (!$zbp->CheckPlugin('hacpai')) {$zbp->ShowError(48);die();}
@@ -37,7 +38,7 @@ function syncComment() {
 		exit;
 	}
 	$authorName = $article->Author->Name;
-	if ($authorName == $comment->Name) {
+	if ($result->comment->isArticleAuthor) {
 		$comment->AuthorID = $article->Author->ID;
 	}
 
@@ -46,7 +47,7 @@ function syncComment() {
 	$comment->HomePage = $result->comment->authorURL;
 	$comment->LogID = $result->comment->articleId;
 	$comment->Content = $result->comment->content;
-	$comment->PostTime = time();
+	$comment->PostTime = (int) $result->comment->time;
 	$comment->IP = GetGuestIP();
 	$comment->Agent = GetGuestAgent();
 	$comment->Metas->HacpaiOriginalData = $result->comment->content;

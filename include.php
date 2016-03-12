@@ -62,6 +62,10 @@ function hacpai_postarticle_succeed(&$article) {
 
 function hacpai_postcomment_succeed(&$comment) {
 	global $zbp;
+	if (defined('IS_HACPAI_SYNCING')) {
+		return;
+	}
+
 	$postData = array(
 		"comment" => array(
 			"id" => $comment->ID,
