@@ -38,9 +38,11 @@ function hacpai_post($url, $data) {
 function hacpai_postarticle_succeed(&$article) {
 	global $zbp;
 	$tagName = $article->TagsName;
-	if ($tagName == '') {
-		$zbp->SetHint('bad', '未设置标签，可能不能同步到hacpai!');
-	}
+	/*
+		if ($tagName == '') {
+			$zbp->SetHint('bad', '未设置标签，可能不能同步到hacpai!');
+		}
+	*/
 	$postData = array(
 		"article" => array(
 			"id" => $article->ID,
