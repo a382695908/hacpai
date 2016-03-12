@@ -5,7 +5,7 @@
 <url>https://github.com/zblogapp/hacpai</url>
 <note>黑客派社区同步</note>
 <description></description>
-<path>main.php</path>
+<path>settings.php</path>
 <include>include.php</include>
 <level>1</level>
 <author>

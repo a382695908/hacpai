@@ -32,18 +32,7 @@ require $blogpath . 'zb_system/admin/admin_top.php';
   <div class="SubMenu">
   </div>
   <div id="divMain2">
-
-<?php
-function getChecked($name, $value) {
-	global $duoshuo;
-	if ($duoshuo->cfg->$name == $value) {
-		return ' checked="checked" ';
-	}
-
-	return '';
-}
-?>
-<form action="event.php?act=save" method="post">
+<form action="savesetting.php?action=save" method="post">
   <table width="100%" class="tableFull tableBorder table_striped table_hover" >
     <thead>
       <tr>
@@ -60,19 +49,17 @@ function getChecked($name, $value) {
         </td>
       </tr>
       <tr>
-        <td><p><span class="bold"> · 黑客派社区邮箱</span><br/>
-            <span class="note">仅在主题和评论框的div嵌套不正确的情况下使用 </span></p></td>
-        <td><input type="text" name="duoshuo_comments_wrapper_intro" value="<?php echo $duoshuo->cfg->comments_wrapper_intro ?>" style="width:50%"/></td>
+        <td><p><span class="bold"> · 黑客派社区邮箱</span></p></td>
+        <td><input type="text" name="hacpai_email" value="<?php echo $zbp->Config("hacpai")->email; ?>" style="width:50%"/></td>
       </tr>
       <tr>
-        <td><p><span class="bold"> · B3log Key</span><br/>
-            <span class="note">仅在主题和评论框的div嵌套不正确的情况下使用 </span></p></td>
-        <td><input type="text" name="duoshuo_comments_wrapper_outro" value="<?php echo $duoshuo->cfg->comments_wrapper_outro ?>" style="width:50%"/></td>
+        <td><p><span class="bold"> · B3log Key</span></p></td>
+        <td><input type="text" name="hacpai_key" value="<?php echo $zbp->Config("hacpai")->key; ?>" style="width:50%"/></td>
       </tr>
       <tr>
         <td><p><span class="bold"> · 其它</span></p></td>
         <td><p>
-            <input name="" type="button" class="button" onClick="if(confirm('你确定要继续吗？')){location.href='event.php?act=fac'}" value="清空插件配置" />
+            <input name="" type="button" class="button" onClick="if(confirm('你确定要继续吗？')){location.href='savesetting.php?action=cleanup'}" value="清空插件配置" />
           </p></td>
       </tr>
     </tbody>

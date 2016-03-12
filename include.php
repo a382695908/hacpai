@@ -11,5 +11,18 @@ function ActivePlugin_hacpai() {
 
 }
 
-function InstallPlugin_hacpai() {}
+function InstallPlugin_hacpai() {
+	hacpai_init();
+}
+
 function UninstallPlugin_hacpai() {}
+
+function hacpai_init() {
+	global $zbp;
+	if (!isset($zbp->Config('hacpai')->version)) {
+		$zbp->Config('duoshuo')->email = '';
+		$zbp->Config('duoshuo')->key = '';
+		$zbp->Config('duoshuo')->version = '1.0';
+		$zbp->SaveConfig('hacpai');
+	}
+}
