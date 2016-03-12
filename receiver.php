@@ -50,8 +50,14 @@ function syncComment() {
 	$comment->IP = GetGuestIP();
 	$comment->Agent = GetGuestAgent();
 	$comment->Metas->HacpaiOriginalData = $result->comment->content;
+	foreach ($GLOBALS['hooks']['Filter_Plugin_PostComment_Core'] as $fpname => &$fpsignal) {
+		$fpname($comment);
+	}
 	filterCommentForHacpai($comment);
 	$comment->Save();
+	foreach ($GLOBALS['hooks']['Filter_Plugin_PostComment_Succeed'] as $fpname => &$fpsignal) {
+		$fpname($comment);
+	}
 }
 
 /**
