@@ -46,11 +46,11 @@ function syncComment() {
 	$comment->Email = $result->comment->authorEmail;
 	$comment->HomePage = $result->comment->authorURL;
 	$comment->LogID = $result->comment->articleId;
-	$comment->Content = $result->comment->content;
+	$comment->Content = $result->comment->contentHTML;
 	$comment->PostTime = (int) $result->comment->time;
-	$comment->IP = GetGuestIP();
-	$comment->Agent = GetGuestAgent();
-	$comment->Metas->HacpaiOriginalData = $result->comment->content;
+	$comment->IP = getRealIp($result->comment->ip);
+	$comment->Agent = $result->comment->ua;
+	$comment->Metas->HacpaiOriginalData = $result->comment->contentHTML;
 	foreach ($GLOBALS['hooks']['Filter_Plugin_PostComment_Core'] as $fpname => &$fpsignal) {
 		$fpname($comment);
 	}
@@ -59,6 +59,15 @@ function syncComment() {
 	foreach ($GLOBALS['hooks']['Filter_Plugin_PostComment_Succeed'] as $fpname => &$fpsignal) {
 		$fpname($comment);
 	}
+}
+
+/**
+ * Get Real IP
+ * @param  string $ip
+ * @return string ip
+ */
+function getRealIp($ip) {
+	return (trim($ip) === "") ? GetGuestIP() : $ip;
 }
 
 /**
