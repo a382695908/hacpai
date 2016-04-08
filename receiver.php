@@ -67,7 +67,7 @@ function syncComment() {
  * @return string ip
  */
 function getRealIp($ip) {
-	return (trim($ip) === "") ? GetGuestIP() : $ip;
+	return (trim($ip) == "") ? GetGuestIP() : $ip;
 }
 
 /**
